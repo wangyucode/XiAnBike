@@ -48,6 +48,30 @@
             android:src="@android:drawable/ic_menu_send"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#444"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:background="@android:color/white">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textColor="@android:color/primary_text_light"
+            android:text="网点查询"/>
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@android:drawable/ic_menu_send"/>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_about"
         android:layout_width="match_parent"

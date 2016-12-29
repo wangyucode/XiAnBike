@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="省钱 省电 省流量"
+        android:text="省电 安全 不推送"
         android:layout_marginTop="12dp"
         android:textColor="#333"
         android:textSize="24sp"
