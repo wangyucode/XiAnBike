@@ -11,9 +11,15 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -30,7 +36,9 @@ public class NearFragment extends Fragment {
 
     private ListView lvNear;
 
+    private List<XmlUtils.BikeStation> stations = new ArrayList<>();
 
+    private NearAdapter adapter;
 
     public NearFragment() {
     }
@@ -40,30 +48,48 @@ public class NearFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_near, container, false);
         lvNear = (ListView) rootView.findViewById(R.id.lv_near);
-        lvNear.setAdapter(new NearAdapter());
+        adapter = new NearAdapter();
+        lvNear.setAdapter(adapter);
         RequestBody body = RequestBody.create(MediaType.parse("*/*"),Constants.body);
         OkGo.post(Constants.url).requestBody(body).execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
 
                 Log.d("wy",XmlUtils.getJsonString(s));
-                List<XmlUtils.BikeStation> stations = XmlUtils.parserJson(XmlUtils.getJsonString(s));
-                Log.d("wy",s);
+                stations = XmlUtils.parserJson(XmlUtils.getJsonString(s));
+                adapter.notifyDataSetChanged();
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLocation(AMapLocation location){
+        Log.d("wy",location.getAddress());
     }
 
     class NearAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return 20;
+            return stations.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return new Object();
+            return stations.get(position);
         }
 
         @Override
@@ -78,17 +104,27 @@ public class NearFragment extends Fragment {
                 holder = new ViewHolder();
                 convertView = getActivity().getLayoutInflater().inflate(R.layout.item_near, parent, false);
                 holder.title = (TextView) convertView.findViewById(R.id.tv_near_title);
+                holder.address = (TextView) convertView.findViewById(R.id.tv_item_address);
+                holder.lock = (TextView) convertView.findViewById(R.id.tv_item_locknum);
+                holder.empty = (TextView) convertView.findViewById(R.id.tv_item_emptynum);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.title.setText("融侨馨苑南");
+            XmlUtils.BikeStation station = stations.get(position);
+            holder.title.setText(station.getSitename());
+            holder.address.setText(station.getLocation());
+            holder.lock.setText("可租"+station.getLocknum()+"辆");
+            holder.empty.setText("可还"+station.getEmptynum()+"辆");
             return convertView;
         }
 
         class ViewHolder {
             TextView title;
+            TextView address;
+            TextView lock;
+            TextView empty;
         }
     }
 }

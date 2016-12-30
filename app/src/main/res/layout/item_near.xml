@@ -12,6 +12,7 @@
         android:text="融侨馨苑南"/>
 
     <TextView
+        android:id="@+id/tv_item_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -23,17 +24,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp">
         <TextView
+            android:id="@+id/tv_item_locknum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#0f0"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
             android:layout_weight="1"
             android:text="可租12辆"/>
         <TextView
+            android:id="@+id/tv_item_emptynum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#f00"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
             android:text="可还12辆"/>
     </LinearLayout>
 

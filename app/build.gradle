@@ -28,5 +28,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.0.1'
     compile 'com.lzy.net:okgo:2.1.1'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
