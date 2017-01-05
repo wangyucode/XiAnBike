@@ -30,4 +30,6 @@ dependencies {
     compile 'com.lzy.net:okgo:2.1.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

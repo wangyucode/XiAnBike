@@ -3,4 +3,32 @@
     <color name="colorPrimary">#2BAF2B</color>
     <color name="colorPrimaryDark">#259B24</color>
     <color name="colorAccent">#FB8C00</color>
+
+    <!--基本色-->
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+
+    <!--灰度色,16进制80表示RGB均为128-->
+    <color name="gray_240">#F0F0F0</color>
+    <color name="gray_224">#E0E0E0</color>
+    <color name="gray_192">#C0C0C0</color>
+    <color name="gray_160">#A0A0A0</color>
+    <color name="gray_128">#808080</color>
+    <color name="gray_96">#606060</color>
+    <color name="gray_64">#404040</color>
+    <color name="gray_48">#303030</color>
+    <color name="gray_32">#202020</color>
+
+
+    <!--透明色***125代表透明度12.5%-->
+    <color name="transparency">#00000000</color>
+    <color name="transparency_31">#07000000</color>
+    <color name="transparency_63">#10000000</color>
+    <color name="transparency_125">#20000000</color>
+    <color name="transparency_250">#40000000</color>
+    <color name="transparency_375">#60000000</color>
+    <color name="transparency_500">#80000000</color>
+    <color name="transparency_625">#A0000000</color>
+    <color name="transparency_750">#C0000000</color>
+    <color name="transparency_875">#E0000000</color>
 </resources>

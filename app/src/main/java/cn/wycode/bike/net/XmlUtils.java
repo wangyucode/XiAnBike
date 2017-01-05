@@ -1,4 +1,4 @@
-package cn.wycode.bike;
+package cn.wycode.bike.net;
 
 import android.util.Xml;
 
@@ -27,7 +27,7 @@ public class XmlUtils {
         return gson.fromJson(json, new TypeToken<List<BikeStation>>(){}.getType());
     }
 
-    class BikeStation{
+    public static class BikeStation{
         public int getEmptynum() {
             return emptynum;
         }

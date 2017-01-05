@@ -1,4 +1,4 @@
-package cn.wycode.bike;
+package cn.wycode.bike.net;
 
 import android.app.Application;
 

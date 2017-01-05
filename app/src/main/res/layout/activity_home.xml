@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bnl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_192"/>
+
+    <cn.wycode.bike.view.BottomNavigationLayout
+        android:id="@+id/bomNavLay_home"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        bnl:text_color_selected="@color/colorPrimary"
+        bnl:text_color_unselected="@color/gray_128" />
+</LinearLayout>

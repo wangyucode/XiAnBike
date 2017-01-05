@@ -1,4 +1,4 @@
-package cn.wycode.bike;
+package cn.wycode.bike.activity.fragement;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,23 +12,32 @@ import android.view.ViewParent;
 
 import com.amap.api.maps.MapView;
 
+import butterknife.BindView;
+import cn.wycode.bike.R;
+
 /**
  * 地图
  * Created by wy on 2016/12/22.
  */
-public class MapFragment extends Fragment{
-    private MapView mapView;
+public class MapFragment extends BaseFragment {
+    @BindView(R.id.map)
+    MapView mapView;
 
-    public MapFragment() {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_map);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        mapView = (MapView) rootView;
-        mapView.onCreate(savedInstanceState);
-        return rootView;
+    protected void initView() {
+
+    }
+
+    @Override
+    public void getHttpData() {
+
     }
 
 
