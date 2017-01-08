@@ -42,6 +42,7 @@ public class NearFragment extends BaseFragment {
 
 
     private StationAdapter adapter;
+    private AMapLocation location;
 
 
     @Override
@@ -61,6 +62,9 @@ public class NearFragment extends BaseFragment {
                 Log.d("wy", XmlUtils.getJsonString(s));
                 MyApplication.stations = XmlUtils.parserJson(XmlUtils.getJsonString(s));
                 MyApplication.convert();
+                if (location != null) {
+                    onLocation(location);
+                }
                 adapter.setList(MyApplication.stations);
             }
         });
@@ -81,15 +85,15 @@ public class NearFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 1)
     public void onLocation(AMapLocation location) {
-        Log.d("wy", location.getAddress()+(int)-0.1f);
-        LatLng now = new LatLng(location.getLatitude(),location.getLongitude());
+        this.location = location;
+        LatLng now = new LatLng(location.getLatitude(), location.getLongitude());
 
         for (BikeStation station : MyApplication.stations) {
-            LatLng bike = new LatLng(station.getLatitude(),station.getLongitude());
-            float distance = AMapUtils.calculateLineDistance(now,bike);
+            LatLng bike = new LatLng(station.getLatitude(), station.getLongitude());
+            float distance = AMapUtils.calculateLineDistance(now, bike);
             station.setDistance(distance);
         }
-        Collections.sort(MyApplication.stations,new LocationComparator());
+        Collections.sort(MyApplication.stations, new LocationComparator());
         adapter.setList(MyApplication.stations);
     }
 }
