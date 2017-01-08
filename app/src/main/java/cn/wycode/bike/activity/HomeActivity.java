@@ -20,6 +20,7 @@ import com.amap.api.location.AMapLocationListener;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.wycode.bike.BaseActivity;
@@ -28,6 +29,7 @@ import cn.wycode.bike.activity.fragement.BaseFragment;
 import cn.wycode.bike.activity.fragement.HelpFragment;
 import cn.wycode.bike.activity.fragement.MapFragment;
 import cn.wycode.bike.activity.fragement.NearFragment;
+import cn.wycode.bike.net.XmlUtils;
 import cn.wycode.bike.view.BottomNavigationLayout;
 
 
@@ -39,7 +41,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
     @BindView(R.id.bomNavLay_home)
     BottomNavigationLayout bomNavLayHome;
     FragmentManager fm;
-    private BaseFragment nearFm, mapFm, helpFm;
+    private Fragment nearFm, mapFm, helpFm;
     private FragmentTransaction ft;
 
     private String[] titles = new String[]{"附近", "地图", "帮助"};
@@ -47,6 +49,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
     public AMapLocationClient mLocationClient;
 
     private static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 200;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
             //启动定位
             mLocationClient.startLocation();
         }
+
+
     }
 
     @Override

@@ -2,16 +2,12 @@ package cn.wycode.bike.activity.fragement;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -19,13 +15,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import butterknife.BindView;
 import cn.wycode.bike.Constants;
+import cn.wycode.bike.MyApplication;
 import cn.wycode.bike.R;
 import cn.wycode.bike.adapter.StationAdapter;
+import cn.wycode.bike.model.BikeStation;
+import cn.wycode.bike.model.LocationComparator;
 import cn.wycode.bike.net.XmlUtils;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -42,14 +40,13 @@ public class NearFragment extends BaseFragment {
     @BindView(R.id.lv_near)
     ListView lvNear;
 
-    private List<XmlUtils.BikeStation> stations = new ArrayList<>();
 
     private StationAdapter adapter;
 
 
     @Override
     protected void initView() {
-        adapter = new StationAdapter(mContext, stations, R.layout.item_near);
+        adapter = new StationAdapter(mContext, MyApplication.stations, R.layout.item_near);
         lvNear.setAdapter(adapter);
 
     }
@@ -62,8 +59,9 @@ public class NearFragment extends BaseFragment {
             public void onSuccess(String s, Call call, Response response) {
 
                 Log.d("wy", XmlUtils.getJsonString(s));
-                stations = XmlUtils.parserJson(XmlUtils.getJsonString(s));
-                adapter.setList(stations);
+                MyApplication.stations = XmlUtils.parserJson(XmlUtils.getJsonString(s));
+                MyApplication.convert();
+                adapter.setList(MyApplication.stations);
             }
         });
     }
@@ -81,8 +79,17 @@ public class NearFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 1)
     public void onLocation(AMapLocation location) {
-        Log.d("wy", location.getAddress());
+        Log.d("wy", location.getAddress()+(int)-0.1f);
+        LatLng now = new LatLng(location.getLatitude(),location.getLongitude());
+
+        for (BikeStation station : MyApplication.stations) {
+            LatLng bike = new LatLng(station.getLatitude(),station.getLongitude());
+            float distance = AMapUtils.calculateLineDistance(now,bike);
+            station.setDistance(distance);
+        }
+        Collections.sort(MyApplication.stations,new LocationComparator());
+        adapter.setList(MyApplication.stations);
     }
 }
