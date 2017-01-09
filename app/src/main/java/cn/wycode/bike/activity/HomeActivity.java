@@ -24,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.wycode.bike.BaseActivity;
+import cn.wycode.bike.MyApplication;
 import cn.wycode.bike.R;
 import cn.wycode.bike.activity.fragement.BaseFragment;
 import cn.wycode.bike.activity.fragement.HelpFragment;
@@ -112,6 +113,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
         if (aMapLocation != null) {
             if (aMapLocation.getErrorCode() == 0) {
                 //可在其中解析amapLocation获取相应内容。
+                MyApplication.location = aMapLocation;
                 EventBus.getDefault().post(aMapLocation);
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
