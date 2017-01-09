@@ -1,8 +1,11 @@
 package cn.wycode.bike.activity.fragement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.amap.api.location.AMapLocation;
@@ -21,6 +24,7 @@ import butterknife.BindView;
 import cn.wycode.bike.Constants;
 import cn.wycode.bike.MyApplication;
 import cn.wycode.bike.R;
+import cn.wycode.bike.activity.MapActivity;
 import cn.wycode.bike.adapter.StationAdapter;
 import cn.wycode.bike.model.BikeStation;
 import cn.wycode.bike.model.LocationComparator;
@@ -35,7 +39,7 @@ import okhttp3.Response;
  * Created by wy on 2016/12/22.
  */
 
-public class NearFragment extends BaseFragment {
+public class NearFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.lv_near)
     ListView lvNear;
@@ -49,6 +53,7 @@ public class NearFragment extends BaseFragment {
     protected void initView() {
         adapter = new StationAdapter(mContext, MyApplication.stations, R.layout.item_near);
         lvNear.setAdapter(adapter);
+        lvNear.setOnItemClickListener(this);
 
     }
 
@@ -95,5 +100,12 @@ public class NearFragment extends BaseFragment {
         }
         Collections.sort(MyApplication.stations, new LocationComparator());
         adapter.setList(MyApplication.stations);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent i = new Intent(mContext, MapActivity.class);
+        i.putExtra(MapActivity.STATION_KEY,MyApplication.stations.get(position));
+        startActivity(i);
     }
 }
