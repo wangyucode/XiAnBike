@@ -55,9 +55,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.AboutActivity"
-            android:label="关于" />
+        <activity android:name=".activity.AboutActivity" />
+
+        <activity android:name=".activity.MapActivity" />
 
 
         <meta-data android:name="com.amap.api.v2.apikey" android:value="00523e38362e0da846d4cc42217e3dbb"/>
