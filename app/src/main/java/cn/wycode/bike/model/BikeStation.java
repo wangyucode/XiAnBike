@@ -1,11 +1,13 @@
 package cn.wycode.bike.model;
 
+import java.io.Serializable;
+
 /**
  * Created by wy
  * on 2017/1/8.
  */
 
-public class BikeStation{
+public class BikeStation implements Serializable{
     public int getEmptynum() {
         return emptynum;
     }
