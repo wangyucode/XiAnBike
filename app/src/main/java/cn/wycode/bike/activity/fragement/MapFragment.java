@@ -23,6 +23,7 @@ import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +41,7 @@ import cn.wycode.bike.model.BikeStation;
  * 地图
  * Created by wy on 2016/12/22.
  */
-public class MapFragment extends BaseFragment implements LocationSource, AMap.OnCameraChangeListener {
+public class MapFragment extends BaseFragment implements LocationSource, AMap.OnCameraChangeListener, AMap.OnMapClickListener {
     @BindView(R.id.map)
     MapView mapView;
 
@@ -78,6 +79,7 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setMyLocationEnabled(true);
         aMap.setOnCameraChangeListener(this);
+        aMap.setOnMapClickListener(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -85,7 +87,7 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
         mListener.onLocationChanged(location);// 显示系统小蓝点
         CameraUpdate mCameraUpdate = CameraUpdateFactory.zoomTo(15);
         aMap.moveCamera(mCameraUpdate);
-        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         LatLngBounds screenBounds = aMap.getProjection().getMapBounds(latLng, 15);
         radius = AMapUtils.calculateLineDistance(screenBounds.northeast, latLng);
     }
@@ -139,16 +141,25 @@ public class MapFragment extends BaseFragment implements LocationSource, AMap.On
 
     @Override
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
-        List<BikeStation> stations = MyApplication.getNearStations(radius,cameraPosition.target);
+        List<BikeStation> stations = MyApplication.getNearStations(radius, cameraPosition.target);
         Log.d("wy", stations.size() + "");
         for (BikeStation station : stations) {
-            String content = station.getLocation()+"\n"
-                    +"可租："+station.getLocknum()+"辆\n"
-                    +"可还："+station.getEmptynum()+"辆";
+            String content = station.getLocation() + "\n"
+                    + "可租：" + station.getLocknum() + "辆\n"
+                    + "可还：" + station.getEmptynum() + "辆";
             aMap.addMarker(new MarkerOptions()
                     .position(new LatLng(station.getLatitude(), station.getLongitude()))
                     .title(station.getSitename())
                     .snippet(content));
+        }
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        for (Marker marker : aMap.getMapScreenMarkers()) {
+            if (marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+            }
         }
     }
 }
