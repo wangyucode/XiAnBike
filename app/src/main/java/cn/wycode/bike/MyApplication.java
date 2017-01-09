@@ -2,6 +2,7 @@ package cn.wycode.bike;
 
 import android.app.Application;
 
+import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CoordinateConverter;
 import com.amap.api.maps.model.LatLng;
@@ -22,6 +23,8 @@ public class MyApplication extends Application {
     public static List<BikeStation> stations = new ArrayList<>();
     public static CoordinateConverter converter;
 
+    public static AMapLocation location;
+    
     @Override
     public void onCreate() {
         super.onCreate();
