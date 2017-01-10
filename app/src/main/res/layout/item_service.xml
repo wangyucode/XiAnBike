@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="name"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/text_size_medium" />
 
         <TextView
             android:id="@+id/tv_area"
@@ -25,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="area"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_medium" />
+            android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginBottom="8dp"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_medium" />
+        android:textSize="@dimen/text_size_small" />
 
     <View
         android:layout_width="match_parent"

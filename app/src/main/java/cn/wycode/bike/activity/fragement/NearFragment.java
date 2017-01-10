@@ -3,6 +3,7 @@ package cn.wycode.bike.activity.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,10 +40,13 @@ import okhttp3.Response;
  * Created by wy on 2016/12/22.
  */
 
-public class NearFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class NearFragment extends BaseFragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.lv_near)
     ListView lvNear;
+
+    @BindView(R.id.srl_near)
+    SwipeRefreshLayout srlNear;
 
 
     private StationAdapter adapter;
@@ -54,11 +58,13 @@ public class NearFragment extends BaseFragment implements AdapterView.OnItemClic
         adapter = new StationAdapter(mContext, MyApplication.stations, R.layout.item_near);
         lvNear.setAdapter(adapter);
         lvNear.setOnItemClickListener(this);
-
+        srlNear.setOnRefreshListener(this);
+        srlNear.setColorSchemeResources(R.color.colorAccent);
     }
 
     @Override
     public void getHttpData() {
+        srlNear.setRefreshing(true);
         RequestBody body = RequestBody.create(MediaType.parse("*/*"), Constants.body);
         OkGo.post(Constants.url).requestBody(body).execute(new StringCallback() {
             @Override
@@ -71,6 +77,7 @@ public class NearFragment extends BaseFragment implements AdapterView.OnItemClic
                     onLocation(location);
                 }
                 adapter.setList(MyApplication.stations);
+                srlNear.setRefreshing(false);
             }
         });
     }
@@ -108,4 +115,12 @@ public class NearFragment extends BaseFragment implements AdapterView.OnItemClic
         i.putExtra(MapActivity.STATION_KEY,MyApplication.stations.get(position));
         startActivity(i);
     }
+
+    @Override
+    public void onRefresh() {
+        getHttpData();
+        EventBus.getDefault().post(new RequestLocationEvent());
+    }
+
+    public static class RequestLocationEvent{}
 }

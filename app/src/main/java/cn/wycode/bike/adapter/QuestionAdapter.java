@@ -26,5 +26,6 @@ public class QuestionAdapter extends WyCommonAdapter<QA> {
         holder.setTextViewText(R.id.tv_question, qa.getQuestion());
         holder.setTextViewText(R.id.tv_answer, qa.getAnswer());
         holder.setViewVisibility(R.id.ll_answer, qa.isShowAnswer() ? View.VISIBLE : View.GONE);
+        holder.setImageViewImage(R.id.iv_arrow, qa.isShowAnswer() ? R.drawable.ic_arrow_down : R.drawable.ic_next);
     }
 }

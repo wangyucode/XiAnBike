@@ -22,6 +22,7 @@
             android:textSize="@dimen/text_size_medium" />
 
         <ImageView
+            android:id="@+id/iv_arrow"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:src="@drawable/ic_next" />
@@ -45,7 +46,7 @@
             android:textColor="@color/gray_96"
             android:id="@+id/tv_answer"
             android:text="办卡指南"
-            android:textSize="@dimen/text_size_medium" />
+            android:textSize="@dimen/text_size_small" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

@@ -18,6 +18,8 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,34 +63,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
         helpFm = new HelpFragment();
         setContentViewWithDefaultTitle(R.layout.activity_home, "附近");
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    WRITE_COARSE_LOCATION_REQUEST_CODE);//自定义的code
-        } else {
-            mLocationClient = new AMapLocationClient(getApplicationContext());
-            mLocationClient.setLocationListener(this);
-            AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-            //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-            //获取最近3s内精度最高的一次定位结果：
-            mLocationOption.setOnceLocationLatest(true);
-            //给定位客户端对象设置定位参数
-            mLocationClient.setLocationOption(mLocationOption);
-            //启动定位
-            mLocationClient.startLocation();
-        }
-
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //可在此继续其他操作。
-        //初始化定位
-        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) return;
         mLocationClient = new AMapLocationClient(getApplicationContext());
         mLocationClient.setLocationListener(this);
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
@@ -98,6 +72,32 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
         mLocationOption.setOnceLocationLatest(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
+
+        onRequestLocation(null);
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestLocation(NearFragment.RequestLocationEvent event){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    WRITE_COARSE_LOCATION_REQUEST_CODE);//自定义的code
+        } else {
+            //启动定位
+            mLocationClient.startLocation();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //可在此继续其他操作。
+        //初始化定位
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) return;
+
         //启动定位
         mLocationClient.startLocation();
     }
@@ -106,6 +106,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationLayout
     protected void onDestroy() {
         super.onDestroy();
         mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
