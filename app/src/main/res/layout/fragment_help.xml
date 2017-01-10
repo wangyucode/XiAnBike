@@ -6,6 +6,7 @@
     android:paddingTop="8dp">
 
     <LinearLayout
+        android:id="@+id/ll_qa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -29,6 +30,7 @@
         android:background="@color/gray_192"/>
 
     <LinearLayout
+        android:id="@+id/ll_guide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -52,6 +54,7 @@
         android:background="@color/gray_192"/>
 
     <LinearLayout
+        android:id="@+id/ll_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -62,7 +65,39 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_medium"
             android:layout_weight="1"
-            android:text="网点查询"/>
+            android:text="服务网点"/>
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_next"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_192"/>
+
+    <LinearLayout
+        android:id="@+id/ll_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:background="@android:color/white">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_weight="1"
+            android:text="客服电话"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_xlarge"
+            android:text="965318"/>
+
         <ImageView
             android:layout_width="26dp"
             android:layout_height="26dp"
