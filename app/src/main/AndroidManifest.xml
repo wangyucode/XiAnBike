@@ -56,9 +56,11 @@
         </activity>
 
         <activity android:name=".activity.AboutActivity" />
-
         <activity android:name=".activity.MapActivity" />
-
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.QuestionListActivity" />
+        <activity android:name=".activity.ServiceTypeActivity" />
+        <activity android:name=".activity.ServiceListActivity" />
 
         <meta-data android:name="com.amap.api.v2.apikey" android:value="00523e38362e0da846d4cc42217e3dbb"/>
         <service android:name="com.amap.api.location.APSService"/>
