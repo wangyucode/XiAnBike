@@ -3,4 +3,4 @@
 
 ##开源 纯净 无广告
 ##省电 安全 不推送 
-[bike1](img/bike1.png)
+![logo](img/bike1.png)
