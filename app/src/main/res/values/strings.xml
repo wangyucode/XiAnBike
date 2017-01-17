@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">西安公共自行车</string>
+    <string name="app_name">西安绿色出行</string>
     <string name="about">\t适配安卓2.3至安卓7.1的纯净版西安自行车网点查询来了，无广告，不推送，还你一个简单纯净的出行APP。</string>
     <string name="wycode"><u>http://wycode.cn</u></string>
     <string name="code"><u>https://github.com/wangyucode/XiAnBike</u></string>
